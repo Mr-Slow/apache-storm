@@ -1,0 +1,2 @@
+1. multi Language Protocol是啥
+2. trident要不要研究一下
