@@ -37,3 +37,11 @@ Apache Storm是由Twitter公司开源的一个分布式实时计算框架, 擅�
 (10)Groupings: tuple在各task间的分发策略: Shuffle grouping, Fields grouping等;
 
 ![storm1](/assets/storm1.png)
+
+### 3.配置
+常用有哪些
+如何指定
+
+### 4.Guaranteeing Message Processing容错机制
+best effort, at least once, and exactly once through Trident.
+msg_id
