@@ -15,6 +15,8 @@ Apache Storm是由Twitter公司开源的一个分布式实时计算框架, 擅�
 <br><br>
 (7)易于部署和操作;
 
+版本区别:
+
 ### 2.概念
 (1)Nimbus: storm集群的master节点, 负责向各节点分发代码, 分配任务以及监控节点的运行状态;
 <br><br>
@@ -45,3 +47,19 @@ Apache Storm是由Twitter公司开源的一个分布式实时计算框架, 擅�
 ### 4.Guaranteeing Message Processing容错机制
 best effort, at least once, and exactly once through Trident.
 msg_id
+
+### 5.storm ui
+
+### 6.运行问题
+
+### 7. Storm Multi-Language Protocol
+
+### 8. pacemaker
+
+### 9. logviewer
+
+### 10.运行模式
+
+### 11.pystorm and streamparse, 调用原理
+
+### 12. 序列化?

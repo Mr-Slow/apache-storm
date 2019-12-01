@@ -2,3 +2,7 @@
 2. trident要不要研究一下
 3. netty
 4. grouping
+5. acker怎么没有
+6. rebanlance
+7. blobstore
+8. windowing
