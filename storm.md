@@ -41,8 +41,22 @@ Apache Storm是由Twitter公司开源的一个分布式实时计算框架, 擅�
 ![storm1](/assets/storm1.png)
 
 ### 3.配置
-常用有哪些
-如何指定
+级别: storm的配置主要分为系统级别和topology级别(以topology开头);
+<br><br>
+定义方式:
+(1)conf/storm.yaml
+(2)对于streamparse: 配置config.json或命令行;
+常用配置项:
+storm.zookeeper.servers
+storm.local.dir
+nimbus.seeds
+supervisor.slots.ports
+<br><br>
+topology.max.task.parallelism: 每个component最大tasks数
+topology.max.spout.pending: 每个spout中正在处理的最大tuple数
+topology.debug: 是否以debug级别运行
+topology.workers: 启动的worker数
+topology.worker.childopts: 给相关Java worker传递参数
 
 ### 4.Guaranteeing Message Processing容错机制
 best effort, at least once, and exactly once through Trident.
