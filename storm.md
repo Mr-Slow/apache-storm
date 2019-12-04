@@ -42,11 +42,60 @@ Apache Storm是由Twitter公司开源的一个分布式实时计算框架, 擅�
 结合
 
 ### 4.streamparse
-#### 1. 生成目录结构:
-sparse quickstart project_name
-截图
-#### 2.
+#### 1. project contents:
+**sparse quickstart project_name**
+<br>
+![contents](/assets/contents.png)
+#### 2. spouts:
+```python
+import itertools
+from streamparse.spout import Spout
 
+class SentenceSpout(Spout):
+    outputs = ['sentence']
+
+    def initialize(self, stormconf, context):
+        self.sentences = [
+            "She advised him to take a long holiday, so he immediately quit work and took a trip around the world",
+            "I was very glad to get a present from her",
+            "He will be here in half an hour",
+            "She saw him eating a sandwich",
+        ]
+        self.sentences = itertools.cycle(self.sentences)
+
+    def next_tuple(self):
+        sentence = next(self.sentences)
+        self.emit([sentence])
+
+    def ack(self, tup_id):
+        pass  # if a tuple is processed properly, do nothing
+
+    def fail(self, tup_id):
+        pass  # if a tuple fails to process, do nothing
+```
+#### 3. bolts:
+```python
+import re
+from streamparse.bolt import Bolt
+
+class SentenceSplitterBolt(Bolt):
+    outputs = ['word']
+    auto_ack = True
+    auto_fail = True
+    auto_anchor = True
+
+    def process(self, tup):
+        sentence = tup.values[0]  # extract the sentence
+        sentence = re.sub(r"[,.;!\?]", "", sentence)  # get rid of punctuation
+        words = [[word.strip()] for word in sentence.split(" ") if word.strip()]
+        if not words:
+            # no words to process in the sentence, fail the tuple
+            self.fail(tup)
+            return
+
+        for word in words:
+            self.emit([word])
+```
 ### 3. Storm Multi-Language Protocol
 python实现: streamparse
 ### 3.配置
@@ -75,7 +124,9 @@ best effort, at least once, and exactly once through Trident.
 msg_id
 
 ### 5.storm ui
-
+#### 1. 监控运行指标
+#### 2. 操作storm
+#### 3. 查看日志
 
 ### 6.运行问题
 
