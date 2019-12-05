@@ -132,12 +132,6 @@ msg_id
 
 ### 7. Storm Multi-Language Protocol
 
-### 8. pacemaker
-
-### 9. logviewer
-
-### 10.运行模式
-
 ### 11.pystorm and streamparse, 调用原理
 
 ### 12. 序列化?
