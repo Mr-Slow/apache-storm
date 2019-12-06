@@ -42,11 +42,12 @@ Apache Storm是由Twitter公司开源的一个分布式实时计算框架, 擅�
 结合
 
 ### 4.streamparse
-#### 1. project contents:
+#### (1) project contents:
 **sparse quickstart project_name**
 <br>
+
 ![contents](/assets/contents.png)
-#### 2. spouts:
+#### (2) spouts:
 ```python
 import itertools
 from streamparse.spout import Spout
@@ -66,6 +67,7 @@ class SentenceSpout(Spout):
     def next_tuple(self):
         sentence = next(self.sentences)
         self.emit([sentence])
+        # emit(tup, tup_id=None, stream=None, direct_task=None, need_task_ids=False)
 
     def ack(self, tup_id):
         pass  # if a tuple is processed properly, do nothing
@@ -73,7 +75,7 @@ class SentenceSpout(Spout):
     def fail(self, tup_id):
         pass  # if a tuple fails to process, do nothing
 ```
-#### 3. bolts:
+#### (3) bolts:
 ```python
 import re
 from streamparse.bolt import Bolt
@@ -95,50 +97,82 @@ class SentenceSplitterBolt(Bolt):
 
         for word in words:
             self.emit([word])
+            # emit(tup, stream=None, anchors=None, direct_task=None, need_task_ids=False)
 ```
-### 3. Storm Multi-Language Protocol
-python实现: streamparse
-### 3.配置
-级别: storm的配置主要分为系统级别和topology级别(以topology开头);
+#### (4) topology:
+```python
+from streamparse import Grouping, Topology
+
+from bolts.wordcount import WordCountBolt
+from spouts.words import WordSpout
+
+
+class WordCount(Topology):
+    word_spout = WordSpout.spec()  # spec(name=None, inputs=None, par=None, config=None)
+    count_bolt = WordCountBolt.spec(inputs={word_spout: Grouping.fields("word")}, par=2)
+```
+#### (5) grouping
+###### field grouping
+![field_grouping](/assets/field_grouping.png)
+###### Shuffle grouping
+###### global grouping: 流向id最小的task
+![global_grouping](/assets/global.png)
+###### direct grouping: 指向某个task
+![direct](/assets/direcct.png)
+###### all grouping: 流向所有task
+![all](/assets/all.png)
+###### none grouping: 相当于shuffle
+###### local_or_shuffle grouping: 随机但优先本地
+#### (6) outout streamparse
+```python
+outputs = [
+        Stream(fields=["device", "point"], name='default'),
+        Stream(fields=["type", "device", "point"], name='agg'),
+]
+```
+#### (7) reliable:
+(1)auto_ack, auto_fail和auto_anchor
+
+![tuple_trace](/assets/tuple_trace.png)
+
+(2)reliable spout和spout
+#### (8) 使用注意:
+(1)next_tuple(), process()非阻塞
+
+### 5.配置
+**级别**: storm的配置主要分为系统级别和topology级别(以topology开头);
 <br><br>
-定义方式:
+**定义方式:**
+<br><br>
 (1)conf/storm.yaml
+<br><br>
 (2)对于streamparse: 配置config.json或命令行;
-常用配置项:
-storm.zookeeper.servers
-storm.local.dir
-nimbus.seeds
+<br><br>
+**常用配置项:**<br><br>
+storm.zookeeper.servers<br>
+storm.local.dir<br>
+nimbus.seeds<br>
 supervisor.slots.ports
 <br><br>
-topology.max.task.parallelism: 每个component最大tasks数
-topology.max.spout.pending: 每个spout中正在处理的最大tuple数
-topology.debug: 是否以debug级别运行
-topology.workers: 启动的worker数
-topology.worker.childopts: 给相关Java worker传递参数
+topology.max.task.parallelism: 每个component最大tasks数<br>
+topology.max.spout.pending: 每个spout中正在处理的最大tuple数<br>
+topology.debug: 是否以debug级别运行<br>
+topology.workers: 启动的worker数<br>
+topology.worker.childopts: 给相关Java worker传递参数<br>
 
-### 4.运行模式
-local mode和cluster mode.
+### 6.运行模式
+local mode: sparse run
+<br><br>
+cluster mode: sparse submit
 
-### 4.Guaranteeing Message Processing容错机制
-best effort, at least once, and exactly once through Trident.
-msg_id
+### 7.storm ui
+#### (1) 监控运行指标
+#### (2) 操作storm
+#### (3) 查看日志
 
-### 5.storm ui
-#### 1. 监控运行指标
-#### 2. 操作storm
-#### 3. 查看日志
-
-### 6.运行问题
-
-### 7. Storm Multi-Language Protocol
-
-### 11.pystorm and streamparse, 调用原理
-
-### 12. 序列化?
-
+### 8. Storm Multi-Language Protocol
+python实现: streamparse
 ### 13.heartbeat机制
-
-### 14.pcdn实时流处理
 
 ### 15.问题:
 1.如何运行

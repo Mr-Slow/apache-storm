@@ -6,3 +6,8 @@
 6. rebanlance
 7. blobstore
 8. windowing
+
+
+9.task id如何获取
+10.storm_conf
+11.ack机制
