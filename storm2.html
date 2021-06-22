@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>1&period; streamparse&#x6E90;&#x7801;&#x7B80;&#x8FF0;</title>
+        <style>
+/* From extension zhuangtongfa.material-theme */
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body {
+  box-sizing: border-box;
+  min-width: 200px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body blockquote {
+  background-color: initial;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre {
+  color: initial;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body code {
+  color: inherit;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre code {
+  color: initial;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body code > div {
+  background: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table th, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table td {
+  border: 1px solid rgba(171, 178, 191, 0.5) !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body.showEditorSelection .code-active-line:before {
+  border-left: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body.showEditorSelection .code-line:hover:before {
+  border-left: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body.showEditorSelection .code-line .code-line:hover:before {
+  border-left: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body p, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body dl, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+/* Generated from 'node_modules/github-markdown-css/github-markdown.css' */
+@font-face {
+  font-family: octicons-link;
+  src: url(data:font/woff;charset=utf-8;base64,d09GRgABAAAAAAZwABAAAAAACFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEU0lHAAAGaAAAAAgAAAAIAAAAAUdTVUIAAAZcAAAACgAAAAoAAQAAT1MvMgAAAyQAAABJAAAAYFYEU3RjbWFwAAADcAAAAEUAAACAAJThvmN2dCAAAATkAAAABAAAAAQAAAAAZnBnbQAAA7gAAACyAAABCUM+8IhnYXNwAAAGTAAAABAAAAAQABoAI2dseWYAAAFsAAABPAAAAZwcEq9taGVhZAAAAsgAAAA0AAAANgh4a91oaGVhAAADCAAAABoAAAAkCA8DRGhtdHgAAAL8AAAADAAAAAwGAACfbG9jYQAAAsAAAAAIAAAACABiATBtYXhwAAACqAAAABgAAAAgAA8ASm5hbWUAAAToAAABQgAAAlXu73sOcG9zdAAABiwAAAAeAAAAME3QpOBwcmVwAAAEbAAAAHYAAAB/aFGpk3jaTY6xa8JAGMW/O62BDi0tJLYQincXEypYIiGJjSgHniQ6umTsUEyLm5BV6NDBP8Tpts6F0v+k/0an2i+itHDw3v2+9+DBKTzsJNnWJNTgHEy4BgG3EMI9DCEDOGEXzDADU5hBKMIgNPZqoD3SilVaXZCER3/I7AtxEJLtzzuZfI+VVkprxTlXShWKb3TBecG11rwoNlmmn1P2WYcJczl32etSpKnziC7lQyWe1smVPy/Lt7Kc+0vWY/gAgIIEqAN9we0pwKXreiMasxvabDQMM4riO+qxM2ogwDGOZTXxwxDiycQIcoYFBLj5K3EIaSctAq2kTYiw+ymhce7vwM9jSqO8JyVd5RH9gyTt2+J/yUmYlIR0s04n6+7Vm1ozezUeLEaUjhaDSuXHwVRgvLJn1tQ7xiuVv/ocTRF42mNgZGBgYGbwZOBiAAFGJBIMAAizAFoAAABiAGIAznjaY2BkYGAA4in8zwXi+W2+MjCzMIDApSwvXzC97Z4Ig8N/BxYGZgcgl52BCSQKAA3jCV8CAABfAAAAAAQAAEB42mNgZGBg4f3vACQZQABIMjKgAmYAKEgBXgAAeNpjYGY6wTiBgZWBg2kmUxoDA4MPhGZMYzBi1AHygVLYQUCaawqDA4PChxhmh/8ODDEsvAwHgMKMIDnGL0x7gJQCAwMAJd4MFwAAAHjaY2BgYGaA4DAGRgYQkAHyGMF8NgYrIM3JIAGVYYDT+AEjAwuDFpBmA9KMDEwMCh9i/v8H8sH0/4dQc1iAmAkALaUKLgAAAHjaTY9LDsIgEIbtgqHUPpDi3gPoBVyRTmTddOmqTXThEXqrob2gQ1FjwpDvfwCBdmdXC5AVKFu3e5MfNFJ29KTQT48Ob9/lqYwOGZxeUelN2U2R6+cArgtCJpauW7UQBqnFkUsjAY/kOU1cP+DAgvxwn1chZDwUbd6CFimGXwzwF6tPbFIcjEl+vvmM/byA48e6tWrKArm4ZJlCbdsrxksL1AwWn/yBSJKpYbq8AXaaTb8AAHja28jAwOC00ZrBeQNDQOWO//sdBBgYGRiYWYAEELEwMTE4uzo5Zzo5b2BxdnFOcALxNjA6b2ByTswC8jYwg0VlNuoCTWAMqNzMzsoK1rEhNqByEyerg5PMJlYuVueETKcd/89uBpnpvIEVomeHLoMsAAe1Id4AAAAAAAB42oWQT07CQBTGv0JBhagk7HQzKxca2sJCE1hDt4QF+9JOS0nbaaYDCQfwCJ7Au3AHj+LO13FMmm6cl7785vven0kBjHCBhfpYuNa5Ph1c0e2Xu3jEvWG7UdPDLZ4N92nOm+EBXuAbHmIMSRMs+4aUEd4Nd3CHD8NdvOLTsA2GL8M9PODbcL+hD7C1xoaHeLJSEao0FEW14ckxC+TU8TxvsY6X0eLPmRhry2WVioLpkrbp84LLQPGI7c6sOiUzpWIWS5GzlSgUzzLBSikOPFTOXqly7rqx0Z1Q5BAIoZBSFihQYQOOBEdkCOgXTOHA07HAGjGWiIjaPZNW13/+lm6S9FT7rLHFJ6fQbkATOG1j2OFMucKJJsxIVfQORl+9Jyda6Sl1dUYhSCm1dyClfoeDve4qMYdLEbfqHf3O/AdDumsjAAB42mNgYoAAZQYjBmyAGYQZmdhL8zLdDEydARfoAqIAAAABAAMABwAKABMAB///AA8AAQAAAAAAAAAAAAAAAAABAAAAAA==) format("woff");
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.5;
+  color: #abb2bf;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  background: #282c34;
+  padding-top: 20px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-c {
+  color: #6a737d;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-c1, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-s .pl-v {
+  color: #005cc5;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-e, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-en {
+  color: #6f42c1;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-smi, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-s .pl-s1 {
+  color: #24292e;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-ent {
+  color: #22863a;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-k {
+  color: #d73a49;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-s, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-pds, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-s .pl-pse .pl-s1, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-sr, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-sr .pl-cce, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-sr .pl-sre, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-sr .pl-sra {
+  color: #032f62;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-v, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-smw {
+  color: #e36209;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-bu {
+  color: #b31d28;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-c2::before {
+  content: "^M";
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-sr .pl-cce {
+  font-weight: bold;
+  color: #22863a;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-ml {
+  color: #735c0f;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-mh, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-mh .pl-en, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-ms {
+  font-weight: bold;
+  color: #005cc5;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-mb {
+  font-weight: bold;
+  color: #24292e;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-mdr {
+  font-weight: bold;
+  color: #6f42c1;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-ba {
+  color: #586069;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-sg {
+  color: #959da5;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .octicon {
+  display: inline-block;
+  vertical-align: text-top;
+  fill: currentColor;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body a {
+  background-color: transparent;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body a:active, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body a:hover {
+  outline-width: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body strong {
+  font-weight: inherit;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body strong {
+  font-weight: bolder;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body img {
+  border-style: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body code, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body kbd, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body input {
+  font: inherit;
+  margin: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body input {
+  overflow: visible;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body [type=checkbox] {
+  box-sizing: border-box;
+  padding: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body * {
+  box-sizing: border-box;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body a {
+  color: #528bff;
+  text-decoration: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body a:hover {
+  text-decoration: underline;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body strong {
+  font-weight: 600;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body hr::before {
+  display: table;
+  content: "";
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body hr::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body td, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body th {
+  padding: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h2, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h3, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h4, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h5, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h1 {
+  font-size: 32px;
+  font-weight: 600;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h2 {
+  font-size: 24px;
+  font-weight: 600;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h3 {
+  font-size: 20px;
+  font-weight: 600;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h4 {
+  font-size: 16px;
+  font-weight: 600;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h5 {
+  font-size: 14px;
+  font-weight: 600;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h6 {
+  font-size: 12px;
+  font-weight: 600;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body blockquote {
+  margin: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul ol {
+  list-style-type: lower-roman;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body dd {
+  margin-left: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .octicon {
+  vertical-align: text-bottom;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-0 {
+  padding-left: 0 !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-1 {
+  padding-left: 4px !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-2 {
+  padding-left: 8px !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-3 {
+  padding-left: 16px !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-4 {
+  padding-left: 24px !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-5 {
+  padding-left: 32px !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-6 {
+  padding-left: 40px !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body::before {
+  display: table;
+  content: "";
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body > *:first-child {
+  margin-top: 0 !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body > *:last-child {
+  margin-bottom: 0 !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .anchor {
+  float: left;
+  padding-right: 4px;
+  margin-left: -20px;
+  line-height: 1;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .anchor:focus {
+  outline: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body p, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body dl, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body blockquote {
+  /* padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5; */
+  padding: 8.5px 17px;
+  margin: 1.5em 0;
+  font-size: inherit;
+  color: #7c879c;
+  border-color: #4b5362;
+  border-width: 4px;
+  border-left: 5px solid #4b5362;
+  background: transparent;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body blockquote > :first-child {
+  margin-top: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body blockquote > :last-child {
+  margin-bottom: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: solid 1px #c6cbd1;
+  border-bottom-color: #959da5;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #959da5;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h2, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h3, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h4, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h5, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #f0f0f0;
+  border-bottom: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h1 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h2 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h3 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h4 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h5 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h1:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h2:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h3:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h4:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h5:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h6:hover .anchor {
+  text-decoration: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h1:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h2:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h3:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h4:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h5:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2em;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.5em;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h3 {
+  font-size: 1.25em;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h4 {
+  font-size: 1em;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h5 {
+  font-size: 0.875em;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h6 {
+  font-size: 0.85em;
+  color: #6a737d;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol {
+  padding-left: 2em;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul ul, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body li {
+  word-wrap: break-all;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body li > p {
+  margin-top: 16px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body li + li {
+  margin-top: 0.25em;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body dl {
+  padding: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table th {
+  font-weight: 700;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table th, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table td {
+  padding: 6px 13px;
+  /* border: 1px solid #dfe2e5; */
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table tr {
+  /* background-color: #fff; */
+  /* border-top: 1px solid #c6cbd1; */
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table tr:nth-child(2n) {
+  /* background-color: #f6f8fa; */
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body img {
+  max-width: 100%;
+  box-sizing: content-box;
+  display: inline-block;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body img[align=right] {
+  padding-left: 20px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body img[align=left] {
+  padding-right: 20px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: #3a3f4b;
+  border-radius: 3px;
+  color: white;
+  margin: 0 1px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre {
+  word-wrap: normal;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre > code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .highlight {
+  margin-bottom: 16px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .highlight pre, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  /* background-color: #f6f8fa; */
+  border-radius: 3px;
+  background-color: #31363f;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+  color: #abb2bf;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: solid 1px #d1d5da;
+  border-bottom-color: #c6cbd1;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #c6cbd1;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body :checked + .radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .task-list-item {
+  list-style-type: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .task-list-item + .task-list-item {
+  margin-top: 3px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .task-list-item input {
+  margin: 0 0.2em 0.25em -1.6em;
+  vertical-align: middle;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body hr {
+  border-bottom-color: #eee;
+}
+
+/*
+
+Atom One Dark by Daniel Gamage
+Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
+
+base:    #282c34
+mono-1:  #abb2bf
+mono-2:  #818896
+mono-3:  #5c6370
+hue-1:   #56b6c2
+hue-2:   #61aeee
+hue-3:   #c678dd
+hue-4:   #98c379
+hue-5:   #e06c75
+hue-5-2: #be5046
+hue-6:   #d19a66
+hue-6-2: #e6c07b
+
+*/
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #abb2bf;
+  background: #282c34;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-comment,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-quote {
+  color: #5c6370;
+  font-style: italic;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-doctag,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-keyword,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-formula {
+  color: #c678dd;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-section,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-name,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-selector-tag,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-deletion,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-subst {
+  color: #e06c75;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-literal {
+  color: #56b6c2;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-string,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-regexp,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-addition,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-attribute,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-meta-string {
+  color: #98c379;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-built_in,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-class .hljs-title {
+  color: #e6c07b;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-attr,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-variable,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-template-variable,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-type,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-selector-class,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-selector-attr,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-selector-pseudo,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-number {
+  color: #d19a66;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-symbol,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-bullet,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-link,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-meta,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-selector-id,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-title {
+  color: #61aeee;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-emphasis {
+  font-style: italic;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-strong {
+  font-weight: bold;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-link {
+  text-decoration: underline;
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <ul>
+<li><a href="#1-streamparse%E6%BA%90%E7%A0%81%E7%AE%80%E8%BF%B0">1. streamparse源码简述</a>
+<ul>
+<li><a href="#11-%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84">1.1 代码结构</a>
+<ul>
+<li><a href="#12-%E6%B5%81%E7%A8%8B%E5%9B%BE">1.2 流程图</a>
+<ul>
+<li><a href="#121%E5%8A%A8%E6%80%81%E8%BD%BD%E5%85%A5%E5%90%84%E6%A8%A1%E5%9D%97">1.2.1动态载入各模块</a></li>
+<li><a href="#122-%E5%8F%82%E6%95%B0">1.2.2 参数</a></li>
+<li><a href="#123-%E6%9F%A5%E6%89%BEtopology%E6%96%87%E4%BB%B6">1.2.3 查找topology文件</a></li>
+<li><a href="#124-%E8%8E%B7%E5%8F%96storm-workers">1.2.4 获取storm workers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#2-thrift">2. thrift</a>
+<ul>
+<li><a href="#21-thrift%E4%BB%8B%E7%BB%8D">2.1 thrift介绍</a></li>
+<li><a href="#22thrift%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B">2.2thrift使用示例:</a></li>
+<li><a href="#23-%E6%9B%B4%E7%AE%80%E6%B4%81%E7%9A%84python-api">2.3 更简洁的python api</a></li>
+</ul>
+</li>
+<li><a href="#3-storm-worker%E6%BA%90%E7%A0%81">3. storm worker源码</a>
+<ul>
+<li><a href="#31-%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84">3.1 代码结构</a></li>
+<li><a href="#32-%E6%B5%81%E7%A8%8B%E5%9B%BE">3.2 流程图</a></li>
+<li><a href="#33-%E6%BA%90%E7%A0%81%E7%89%87%E6%AE%B5">3.3 源码片段</a>
+<ul>
+<li><a href="#331-spout-bolt%E4%B8%BB%E5%BE%AA%E7%8E%AF">3.3.1 spout, bolt主循环</a></li>
+<li><a href="#332-fieldsgroup%E8%AE%A1%E7%AE%97">3.3.2 FieldsGroup计算</a></li>
+<li><a href="#333-ack%E6%9C%BA%E5%88%B6">3.3.3 ack机制</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="1-streamparse源码简述">1. streamparse源码简述</h1>
+<h2 id="11-代码结构">1.1 代码结构</h2>
+<p><img src="file:////Users/liuyuan/projects/apache-storm/assets/streamparse_code.png" alt="thrift_dir"></p>
+<h3 id="12-流程图">1.2 流程图</h3>
+<p><a href="https://www.processon.com/view/link/6077ffdde401fd2d669c76dc">https://www.processon.com/view/link/6077ffdde401fd2d669c76dc</a></p>
+<h4 id="121动态载入各模块">1.2.1动态载入各模块</h4>
+<pre><code class="language-python"><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">load_subparsers</span>(<span class="hljs-params">subparsers</span>):</span>
+    <span class="hljs-string">&quot;&quot;&quot;
+    searches modules in streamparse/bin for a &#x27;subparser_hook&#x27; method and calls
+    the &#x27;subparser_hook&#x27; method on the sparse subparsers object.
+    &quot;&quot;&quot;</span>
+    <span class="hljs-keyword">for</span> _, mod_name, is_pkg <span class="hljs-keyword">in</span> pkgutil.iter_modules([os.path.dirname(__file__)]):
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> is_pkg <span class="hljs-keyword">and</span> mod_name <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> sys.modules:
+            module = importlib.import_module(<span class="hljs-string">f&quot;streamparse.cli.<span class="hljs-subst">{mod_name}</span>&quot;</span>)
+            <span class="hljs-comment"># check for the subparser hook</span>
+            <span class="hljs-keyword">if</span> hasattr(module, <span class="hljs-string">&quot;subparser_hook&quot;</span>):
+                module.subparser_hook(subparsers)
+</div></code></pre>
+<p>pkgutil使用:</p>
+<pre><code class="language-python"><div><span class="hljs-keyword">import</span> pkgutil
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">from</span> os.path <span class="hljs-keyword">import</span> dirname
+<span class="hljs-keyword">import</span> importlib
+
+
+TEST_DIR = dirname(dirname(dirname(__file__))) + <span class="hljs-string">&#x27;/streamparse/streamparse&#x27;</span>
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">test1</span>():</span>
+    <span class="hljs-keyword">for</span> finder, mod_name, is_pkg <span class="hljs-keyword">in</span> pkgutil.iter_modules([TEST_DIR]):
+        print(finder, mod_name, is_pkg)  <span class="hljs-comment"># finder对象, 模块名, 是否为package</span>
+        print(finder.find_spec(mod_name))
+        print()
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> is_pkg <span class="hljs-keyword">and</span> mod_name <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> sys.modules:
+            module = importlib.import_module(<span class="hljs-string">f&quot;streamparse.<span class="hljs-subst">{mod_name}</span>&quot;</span>) 
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">test2</span>():</span>
+    <span class="hljs-keyword">for</span> root, dirnames, filenames <span class="hljs-keyword">in</span> os.walk(TEST_DIR):
+        print(root, dirnames, filenames)  <span class="hljs-comment"># 目录路径, 目录下子目录名, 目录下文件名</span>
+        <span class="hljs-keyword">if</span> root == TEST_DIR:
+            <span class="hljs-keyword">for</span> name <span class="hljs-keyword">in</span> filenames:
+                <span class="hljs-keyword">if</span> name == <span class="hljs-string">&#x27;__init__.py&#x27;</span>:
+                    <span class="hljs-keyword">continue</span>
+                mod_name = name.split(<span class="hljs-string">&#x27;.&#x27;</span>)[<span class="hljs-number">0</span>]
+                module = importlib.import_module(<span class="hljs-string">f&quot;streamparse.<span class="hljs-subst">{mod_name}</span>&quot;</span>) 
+
+
+test1()
+
+<span class="hljs-string">&quot;&quot;&quot;
+FileFinder(&#x27;/Users/liuyuan/projects/streamparse/streamparse&#x27;) spout False
+ModuleSpec(name=&#x27;spout&#x27;, loader=&lt;_frozen_importlib_external.SourceFileLoader object at 0x7fac26c39c90&gt;, origin=&#x27;/Users/liuyuan/projects/streamparse/streamparse/spout.py&#x27;)
+
+FileFinder(&#x27;/Users/liuyuan/projects/streamparse/streamparse&#x27;) storm True
+ModuleSpec(name=&#x27;storm&#x27;, loader=&lt;_frozen_importlib_external.SourceFileLoader object at 0x7fac26bd8490&gt;, origin=&#x27;/Users/liuyuan/projects/streamparse/streamparse/storm/__init__.py&#x27;, submodule_search_locations=[&#x27;/Users/liuyuan/projects/streamparse/streamparse/storm&#x27;])
+
+FileFinder(&#x27;/Users/liuyuan/projects/streamparse/streamparse&#x27;) thrift False
+ModuleSpec(name=&#x27;thrift&#x27;, loader=&lt;_frozen_importlib_external.SourceFileLoader object at 0x7fac26bd8490&gt;, origin=&#x27;/Users/liuyuan/projects/streamparse/streamparse/thrift.py&#x27;)
+&quot;&quot;&quot;</span>
+
+
+test2()
+
+
+<span class="hljs-string">&quot;&quot;&quot;
+/Users/liuyuan/projects/streamparse/streamparse [&#x27;bootstrap&#x27;, &#x27;cli&#x27;, &#x27;storm&#x27;, &#x27;dsl&#x27;] [&#x27;run.py&#x27;, &#x27;version.py&#x27;, &#x27;util.py&#x27;, &#x27;bolt.py&#x27;, &#x27;__init__.py&#x27;, &#x27;thrift.py&#x27;, &#x27;spout.py&#x27;, &#x27;component.py&#x27;]
+/Users/liuyuan/projects/streamparse/streamparse/bootstrap [&#x27;project&#x27;] [&#x27;__init__.py&#x27;]
+/Users/liuyuan/projects/streamparse/streamparse/bootstrap/project [&#x27;virtualenvs&#x27;, &#x27;topologies&#x27;, &#x27;src&#x27;] [&#x27;project.jinja2.clj&#x27;, &#x27;config.jinja2.json&#x27;, &#x27;gitignore&#x27;, &#x27;fabfile.py&#x27;]
+&quot;&quot;&quot;</span>
+</div></code></pre>
+<h4 id="122-参数">1.2.2 参数</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">参数名</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">-a --ackers</td>
+<td style="text-align:center">acker的数量</td>
+</tr>
+<tr>
+<td style="text-align:center">--config</td>
+<td style="text-align:center">指定配置文件</td>
+</tr>
+<tr>
+<td style="text-align:center">-d --debug</td>
+<td style="text-align:center">设置topology.debug为true</td>
+</tr>
+<tr>
+<td style="text-align:center">-e --environment</td>
+<td style="text-align:center">选择配置文件中的运行环境</td>
+</tr>
+<tr>
+<td style="text-align:center">-f --force</td>
+<td style="text-align:center">强制submit,如果存在同名的topo会kill</td>
+</tr>
+<tr>
+<td style="text-align:center">-i --inactive</td>
+<td style="text-align:center">设置topology为inactive模式</td>
+</tr>
+<tr>
+<td style="text-align:center">-j --local_jar_path</td>
+<td style="text-align:center">指定jar的路径</td>
+</tr>
+<tr>
+<td style="text-align:center">-n --name</td>
+<td style="text-align:center">指定topo的name</td>
+</tr>
+<tr>
+<td style="text-align:center">-o --option</td>
+<td style="text-align:center">传递到storm的参数或自定义参数<br>-o storm.workers.list<br>-o install_virtualenv</td>
+</tr>
+<tr>
+<td style="text-align:center">-N --override_name</td>
+<td style="text-align:center">自定义topology名称</td>
+</tr>
+<tr>
+<td style="text-align:center">--overwrite_virtualenv</td>
+<td style="text-align:center">重新创建虚拟环境就算已存在</td>
+</tr>
+<tr>
+<td style="text-align:center">--pool_size</td>
+<td style="text-align:center">更新虚拟环境时创建ssh连接的个数</td>
+</tr>
+<tr>
+<td style="text-align:center">-r --requirements</td>
+<td style="text-align:center">指定虚拟环境的安装文件</td>
+</tr>
+<tr>
+<td style="text-align:center">-R --remote_jar_path</td>
+<td style="text-align:center">指定nimbus上的jar路径</td>
+</tr>
+<tr>
+<td style="text-align:center">--timeout</td>
+<td style="text-align:center">指定submit的超时时间</td>
+</tr>
+<tr>
+<td style="text-align:center">-u --uber_jar</td>
+<td style="text-align:center">submit时创建uber jar</td>
+</tr>
+<tr>
+<td style="text-align:center">--user</td>
+<td style="text-align:center">创建或更新虚拟环境时的用户</td>
+</tr>
+<tr>
+<td style="text-align:center">--wait</td>
+<td style="text-align:center">kill时的等待时间</td>
+</tr>
+<tr>
+<td style="text-align:center">-w --workers</td>
+<td style="text-align:center">worker的数量</td>
+</tr>
+</tbody>
+</table>
+<h4 id="123-查找topology文件">1.2.3 查找topology文件</h4>
+<pre><code class="language-python"><div>topology_path = config[<span class="hljs-string">&quot;topology_specs&quot;</span>]
+topology_files = glob(<span class="hljs-string">f&quot;<span class="hljs-subst">{topology_path}</span>/*.py&quot;</span>)
+</div></code></pre>
+<p>glob函数的使用:</p>
+<pre><code class="language-python"><div><span class="hljs-keyword">from</span> glob <span class="hljs-keyword">import</span> glob
+
+
+TEST_DIR = <span class="hljs-string">&#x27;/Users/liuyuan/projects/streamparse/streamparse/&#x27;</span>
+
+<span class="hljs-comment"># glob用于查找匹配某个路径下的文件</span>
+files = glob(TEST_DIR + <span class="hljs-string">&#x27;*.py&#x27;</span>)
+print(files)
+
+<span class="hljs-string">&quot;&quot;&quot;
+[&#x27;/Users/liuyuan/projects/streamparse/streamparse/run.py&#x27;, &#x27;/Users/liuyuan/projects/streamparse/streamparse/version.py&#x27;, &#x27;/Users/liuyuan/projects/streamparse/streamparse/util.py&#x27;, &#x27;/Users/liuyuan/projects/streamparse/streamparse/bolt.py&#x27;, &#x27;/Users/liuyuan/projects/streamparse/streamparse/__init__.py&#x27;, &#x27;/Users/liuyuan/projects/streamparse/streamparse/thrift.py&#x27;, &#x27;/Users/liuyuan/projects/streamparse/streamparse/spout.py&#x27;, &#x27;/Users/liuyuan/projects/streamparse/streamparse/component.py&#x27;]
+&quot;&quot;&quot;</span>
+
+<span class="hljs-comment"># 匹配所有文件, 目录, 只匹配第一层, recursive=True会递归输出所有子目录</span>
+files2 = glob(TEST_DIR + <span class="hljs-string">&#x27;**&#x27;</span>)
+print(files2)
+</div></code></pre>
+<h4 id="124-获取storm-workers">1.2.4 获取storm workers</h4>
+<pre><code class="language-python"><div>_storm_workers = {}
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_storm_workers</span>(<span class="hljs-params">env_config</span>):</span>
+    <span class="hljs-string">&quot;&quot;&quot;Retrieves list of workers, optionally from nimbus.
+
+    This function will look up the list of current workers from nimbus if
+    workers have not been defined in config.json.
+
+    :param env_config: The project&#x27;s parsed config.
+    :type env_config: `dict`
+
+    :returns: List of workers
+    &quot;&quot;&quot;</span>
+    nimbus_info = get_nimbus_host_port(env_config)
+    <span class="hljs-keyword">if</span> nimbus_info <span class="hljs-keyword">in</span> _storm_workers:
+        <span class="hljs-keyword">return</span> _storm_workers[nimbus_info]
+
+    worker_list = env_config.get(<span class="hljs-string">&quot;workers&quot;</span>)
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> worker_list:
+        <span class="hljs-keyword">with</span> ssh_tunnel(env_config) <span class="hljs-keyword">as</span> (host, port):  <span class="hljs-comment"># context manager</span>
+            nimbus_client = get_nimbus_client(env_config, host=host, port=port)
+            cluster_info = nimbus_client.getClusterInfo()
+            worker_list = [supervisor.host <span class="hljs-keyword">for</span> supervisor <span class="hljs-keyword">in</span> cluster_info.supervisors]
+
+    _storm_workers[nimbus_info] = worker_list
+    <span class="hljs-keyword">return</span> worker_list
+
+
+<span class="hljs-meta">@contextmanager</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">ssh_tunnel</span>(<span class="hljs-params">env_config, local_port=<span class="hljs-number">6627</span>, remote_port=None, quiet=False</span>):</span>
+    <span class="hljs-string">&quot;&quot;&quot;Setup an optional ssh_tunnel to Nimbus.
+
+    If use_ssh_for_nimbus is False, no tunnel will be created.
+    &quot;&quot;&quot;</span>
+    host, nimbus_port = get_nimbus_host_port(env_config)
+ 
+    <span class="hljs-keyword">if</span> is_ssh_for_nimbus(env_config):
+        <span class="hljs-string">&quot;&quot;&quot;
+        创建ssh 连接
+        ........
+        &quot;&quot;&quot;</span>
+        <span class="hljs-keyword">yield</span> <span class="hljs-string">&quot;localhost&quot;</span>, local_port
+        <span class="hljs-comment"># Clean up after we exit context</span>
+        <span class="hljs-keyword">if</span> need_setup:
+            ssh_proc.kill()
+        <span class="hljs-keyword">del</span> _active_tunnels[local_port]
+    <span class="hljs-comment"># Do nothing if we&#x27;re not supposed to use ssh</span>
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">yield</span> host, remote_port
+
+</div></code></pre>
+<p>contextlib使用:</p>
+<pre><code class="language-python"><div><span class="hljs-keyword">from</span> contextlib <span class="hljs-keyword">import</span> contextmanager
+
+<span class="hljs-meta">@contextmanager</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">tag</span>(<span class="hljs-params">name</span>):</span>
+    <span class="hljs-keyword">try</span>:
+        print(<span class="hljs-string">&quot;start...&quot;</span>)
+
+        <span class="hljs-keyword">yield</span> name
+
+        print(<span class="hljs-string">&quot;end...&quot;</span>)
+    <span class="hljs-keyword">finally</span>:
+        print(<span class="hljs-string">&#x27;finished..&#x27;</span>)
+
+
+<span class="hljs-keyword">with</span> tag(<span class="hljs-string">&quot;aaa&quot;</span>) <span class="hljs-keyword">as</span> n:
+    print(<span class="hljs-string">&quot;hello world&quot;</span>)
+    <span class="hljs-keyword">raise</span> Exception(<span class="hljs-string">&#x27;something wrong&#x27;</span>)
+    print(n)
+
+
+<span class="hljs-string">&quot;&quot;&quot;
+start...
+hello world
+finished..
+Traceback (most recent call last):
+  File &quot;/Users/liuyuan/projects/apache-storm/tests/test_contextlib.py&quot;, line 18, in &lt;module&gt;
+    raise Exception(&#x27;something wrong&#x27;)
+Exception: something wrong
+&quot;&quot;&quot;</span>
+</div></code></pre>
+<h1 id="2-thrift">2. thrift</h1>
+<h2 id="21-thrift介绍">2.1 thrift介绍</h2>
+<p>在storm中nimbus, supervisor都属于thrift server;</p>
+<p>Thrift是一个远程过程调用（RPC）框架，可实现跨语言的调用, 目前是Apache软件基金会的开源项目;</p>
+<p>用户通过Thrift的IDL（接口定义语言）来描述接口函数及数据类型，然后通过Thrift的编译环境生成各种语言类型的接口文件，用户可以根据自己的需要采用不同的语言开发客户端代码和服务器端代码。</p>
+<h2 id="22thrift使用示例">2.2thrift使用示例:</h2>
+<p>(1) 定义thrift文件(test_thrift.thrift):</p>
+<pre><code class="language-thrift"><div># 定义<span class="hljs-keyword">namespace</span>
+<span class="hljs-keyword">namespace</span> py test_python
+<span class="hljs-keyword">namespace</span> java test_java
+
+
+# 定义数据类型
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">People</span> </span>{
+    <span class="hljs-number">1</span>: <span class="hljs-built_in">string</span> name,
+    <span class="hljs-number">2</span>: <span class="hljs-built_in">i32</span> age
+}
+
+# 定义<span class="hljs-class"><span class="hljs-keyword">service</span>
+<span class="hljs-title">service</span> Test </span>{
+    <span class="hljs-keyword">void</span> print_people_info(<span class="hljs-number">1</span>:People people),
+
+    <span class="hljs-built_in">i32</span> add(<span class="hljs-number">1</span>:<span class="hljs-built_in">i32</span> number1, <span class="hljs-number">2</span>:<span class="hljs-built_in">i32</span> number2)
+}
+
+</div></code></pre>
+<p>(2) 编译thrift文件</p>
+<pre><code class="language-bash"><div><span class="hljs-comment"># thrift --gen language thrift_file</span>
+thrift --gen py test_thrift.thrift
+<span class="hljs-comment"># 或者</span>
+thrift --gen java test_thrift.thrift
+</div></code></pre>
+<p>生成的文件目录:</p>
+<p><img src="file:////Users/liuyuan/projects/apache-storm/assets/thrift_dir.png" alt="thrift_dir"></p>
+<p><a href="http://Test.py">Test.py</a>: 按Service生成的对应文件</p>
+<p><a href="http://ttypes.py">ttypes.py</a>: 按数据类型生成的对应文件</p>
+<p><a href="http://constants.py">constants.py</a>: 集中导入一些类名;</p>
+<p>Test-remote: 用于测试service的文件;</p>
+<p>(3) 利用自动生成的代码编写server或client代码</p>
+<p>server:</p>
+<pre><code class="language-python"><div><span class="hljs-keyword">from</span> test_python <span class="hljs-keyword">import</span> Test
+
+<span class="hljs-keyword">from</span> thrift.transport <span class="hljs-keyword">import</span> TSocket
+<span class="hljs-keyword">from</span> thrift.transport <span class="hljs-keyword">import</span> TTransport
+<span class="hljs-keyword">from</span> thrift.protocol <span class="hljs-keyword">import</span> TBinaryProtocol
+<span class="hljs-keyword">from</span> thrift.server <span class="hljs-keyword">import</span> TServer
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FunctionHandler</span>:</span>
+
+    <span class="hljs-comment"># 定义同名函数</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">print_people_info</span>(<span class="hljs-params">self, people</span>):</span>
+        print(people.name, people.age)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add</span>(<span class="hljs-params">self, number1, number2</span>):</span>
+        <span class="hljs-keyword">return</span> number1 + number2
+
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:
+    <span class="hljs-comment"># handler封装入Test中</span>
+    hander = FunctionHandler()
+    processor = Test.Processor(hander)
+
+    <span class="hljs-comment"># 创建socket和server</span>
+    transport = TSocket.TServerSocket(host=<span class="hljs-string">&#x27;127.0.0.1&#x27;</span>, port=<span class="hljs-number">9090</span>)
+    tfactory = TTransport.TBufferedTransportFactory()
+    pfactory = TBinaryProtocol.TBinaryProtocolFactory()
+
+    server = TServer.TSimpleServer(processor, transport, tfactory, pfactory)
+
+    <span class="hljs-comment"># 启动server</span>
+    print(<span class="hljs-string">&#x27;server started...&#x27;</span>)
+    server.serve()
+</div></code></pre>
+<p>client:</p>
+<pre><code class="language-python"><div><span class="hljs-keyword">from</span> test_python <span class="hljs-keyword">import</span> Test
+<span class="hljs-keyword">from</span> test_python.ttypes <span class="hljs-keyword">import</span> People
+
+<span class="hljs-keyword">from</span> thrift <span class="hljs-keyword">import</span> Thrift
+<span class="hljs-keyword">from</span> thrift.transport <span class="hljs-keyword">import</span> TSocket
+<span class="hljs-keyword">from</span> thrift.transport <span class="hljs-keyword">import</span> TTransport
+<span class="hljs-keyword">from</span> thrift.protocol <span class="hljs-keyword">import</span> TBinaryProtocol
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span>
+    <span class="hljs-comment"># Make socket</span>
+    transport = TSocket.TSocket(<span class="hljs-string">&#x27;localhost&#x27;</span>, <span class="hljs-number">9090</span>)
+
+    <span class="hljs-comment"># Buffering is critical. Raw sockets are very slow</span>
+    transport = TTransport.TBufferedTransport(transport)
+
+    <span class="hljs-comment"># Wrap in a protocol</span>
+    protocol = TBinaryProtocol.TBinaryProtocol(transport)
+
+    <span class="hljs-comment"># Create a client to use the protocol</span>
+    client = Test.Client(protocol)
+
+    <span class="hljs-comment"># Make peple instane</span>
+    people = People(name=<span class="hljs-string">&#x27;Alice&#x27;</span>, age=<span class="hljs-number">15</span>)
+
+    <span class="hljs-comment"># Connect</span>
+    transport.open()
+
+    <span class="hljs-comment"># execute</span>
+    client.print_people_info(people)
+    print(<span class="hljs-string">&#x27;print people info success.&#x27;</span>)
+
+    res = client.add(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>)
+    print(<span class="hljs-string">&#x27;add result: %s + %s=%s&#x27;</span> % (<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, res))
+
+    <span class="hljs-comment"># Close</span>
+    transport.close()
+
+
+main()
+</div></code></pre>
+<h2 id="23-更简洁的python-api">2.3 更简洁的python api</h2>
+<p>server:</p>
+<pre><code class="language-python"><div><span class="hljs-keyword">import</span> thriftpy2
+
+<span class="hljs-comment"># 解析thrift文件</span>
+test_python = thriftpy2.load(<span class="hljs-string">&#x27;test_thrift.thrift&#x27;</span>, module_name=<span class="hljs-string">&#x27;test_python_thrift&#x27;</span>)
+
+<span class="hljs-keyword">from</span> thriftpy2.rpc <span class="hljs-keyword">import</span> make_server
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FunctionHandler</span>:</span>
+
+    <span class="hljs-comment"># 定义同名函数</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">print_people_info</span>(<span class="hljs-params">self, people</span>):</span>
+        print(people.name, people.age)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add</span>(<span class="hljs-params">self, number1, number2</span>):</span>
+        <span class="hljs-keyword">return</span> number1 + number2
+
+server = make_server(test_python.Test, FunctionHandler(), <span class="hljs-string">&#x27;localhost&#x27;</span>, <span class="hljs-number">9090</span>)
+print(<span class="hljs-string">&#x27;server started...&#x27;</span>)
+server.serve()
+</div></code></pre>
+<p>client:</p>
+<pre><code class="language-python"><div><span class="hljs-keyword">import</span> thriftpy2
+
+<span class="hljs-comment"># 解析thrift文件</span>
+test_python = thriftpy2.load(<span class="hljs-string">&#x27;test_thrift.thrift&#x27;</span>, module_name=<span class="hljs-string">&#x27;test_python_thrift&#x27;</span>)
+
+<span class="hljs-keyword">from</span> thriftpy2.rpc <span class="hljs-keyword">import</span> make_client
+
+<span class="hljs-comment"># 创建client</span>
+client = make_client(test_python.Test, <span class="hljs-string">&#x27;localhost&#x27;</span>, <span class="hljs-number">9090</span>)
+
+people = test_python.People(name=<span class="hljs-string">&#x27;Alice&#x27;</span>, age=<span class="hljs-number">25</span>)
+
+<span class="hljs-comment"># execute</span>
+client.print_people_info(people)
+print(<span class="hljs-string">&#x27;print people info success.&#x27;</span>)
+
+res = client.add(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>)
+print(<span class="hljs-string">&#x27;add result: %s + %s=%s&#x27;</span> % (<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, res))
+
+</div></code></pre>
+<h1 id="3-storm-worker源码">3. storm worker源码</h1>
+<h2 id="31-代码结构">3.1 代码结构</h2>
+<p>版本2.0.0以前, 大部分代码都由clojure所写, 不易阅读与维护</p>
+<p>最新版本:
+<img src="file:////Users/liuyuan/projects/apache-storm/assets/storm_code_structure.png" alt="storm_dir">
+bin/: 程序入口, 命令行启动storm服务(python脚本)</p>
+<p>storm-client: worker, executor, spout, bolt等实现;</p>
+<p>storm-server: nimbus, supervisor等实现;</p>
+<p>storm-webapp: ui server等实现;</p>
+<h2 id="32-流程图">3.2 流程图</h2>
+<p><a href="https://www.processon.com/view/link/6077ffdde401fd2d669c76dc">https://www.processon.com/view/link/6077ffdde401fd2d669c76dc</a></p>
+<h2 id="33-源码片段">3.3 源码片段</h2>
+<h3 id="331-spout-bolt主循环">3.3.1 spout, bolt主循环</h3>
+<p>(1) 外层循环:</p>
+<pre><code class="language-java"><div>  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> SmartThread <span class="hljs-title">asyncLoop</span><span class="hljs-params">(<span class="hljs-keyword">final</span> Callable afn, <span class="hljs-keyword">boolean</span> isDaemon, <span class="hljs-keyword">final</span> Thread.UncaughtExceptionHandler eh,
+                                        <span class="hljs-keyword">int</span> priority, <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> isFactory, <span class="hljs-keyword">boolean</span> startImmediately,
+                                        String threadName)</span> </span>{
+        SmartThread thread = <span class="hljs-keyword">new</span> SmartThread(<span class="hljs-keyword">new</span> Runnable() {
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>{
+                <span class="hljs-keyword">try</span> {
+                    <span class="hljs-keyword">final</span> Callable&lt;Long&gt; fn = isFactory ? (Callable&lt;Long&gt;) afn.call() : afn;
+                    <span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>) {
+                        <span class="hljs-keyword">if</span> (Thread.interrupted()) {
+                            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InterruptedException();
+                        }
+                        <span class="hljs-keyword">final</span> Long s = fn.call();
+                        <span class="hljs-keyword">if</span> (s == <span class="hljs-keyword">null</span>) { <span class="hljs-comment">// then stop running it</span>
+                            <span class="hljs-keyword">break</span>;
+                        }
+                        <span class="hljs-keyword">if</span> (s &gt; <span class="hljs-number">0</span>) {
+                            Time.sleep(s);
+                        }
+                    }
+                } <span class="hljs-keyword">catch</span> (Throwable t) {
+                    <span class="hljs-keyword">if</span> (Utils.exceptionCauseIsInstanceOf(
+                        InterruptedException.class, t)) {
+                        LOG.info(&quot;Async loop interrupted!&quot;);
+                        <span class="hljs-keyword">return</span>;
+                    }
+                    LOG.error(<span class="hljs-string">&quot;Async loop died!&quot;</span>, t);
+                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(t);
+                }
+            }
+        });
+        <span class="hljs-keyword">if</span> (eh != <span class="hljs-keyword">null</span>) {
+            thread.setUncaughtExceptionHandler(eh);
+        } <span class="hljs-keyword">else</span> {
+            thread.setUncaughtExceptionHandler(<span class="hljs-keyword">new</span> Thread.UncaughtExceptionHandler() {
+                <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">uncaughtException</span><span class="hljs-params">(Thread t, Throwable e)</span> </span>{
+                    LOG.error(<span class="hljs-string">&quot;Async loop died!&quot;</span>, e);
+                    Utils.exitProcess(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;Async loop died!&quot;</span>);
+                }
+            });
+        }
+        thread.setDaemon(isDaemon);
+        thread.setPriority(priority);
+        <span class="hljs-keyword">if</span> (threadName != <span class="hljs-keyword">null</span> &amp;&amp; !threadName.isEmpty()) {
+            thread.setName(thread.getName() + <span class="hljs-string">&quot;-&quot;</span> + threadName);
+        }
+        <span class="hljs-keyword">if</span> (startImmediately) {
+            thread.start();
+        }
+        <span class="hljs-keyword">return</span> thread;
+}
+</div></code></pre>
+<p>(2) spout主循环</p>
+<pre><code class="language-java"><div><span class="hljs-function"><span class="hljs-keyword">public</span> Callable&lt;Long&gt; <span class="hljs-title">call</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        init(idToTask, idToTaskBase);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Callable&lt;Long&gt;() {
+            <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> recvqCheckSkipCountMax = getSpoutRecvqCheckSkipCount();
+            <span class="hljs-keyword">int</span> recvqCheckSkips = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">int</span> swIdleCount = <span class="hljs-number">0</span>; <span class="hljs-comment">// counter for spout wait strategy</span>
+            <span class="hljs-keyword">int</span> bpIdleCount = <span class="hljs-number">0</span>; <span class="hljs-comment">// counter for back pressure wait strategy</span>
+            <span class="hljs-keyword">int</span> rmspCount = <span class="hljs-number">0</span>;
+
+            <span class="hljs-meta">@Override</span>
+            <span class="hljs-function"><span class="hljs-keyword">public</span> Long <span class="hljs-title">call</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
+                <span class="hljs-keyword">int</span> receiveCount = <span class="hljs-number">0</span>;
+                receiveCount = receiveQueue.consume(SpoutExecutor.<span class="hljs-keyword">this</span>);
+
+                <span class="hljs-keyword">long</span> currCount = emittedCount.get();
+                <span class="hljs-keyword">boolean</span> reachedMaxSpoutPending = (maxSpoutPending != <span class="hljs-number">0</span>) &amp;&amp; (pending.size() &gt;= maxSpoutPending); <span class="hljs-comment">//spout pending</span>
+
+                <span class="hljs-keyword">boolean</span> pendingEmitsIsEmpty = tryFlushPendingEmits();
+                <span class="hljs-keyword">boolean</span> noEmits = <span class="hljs-keyword">true</span>;
+                <span class="hljs-keyword">long</span> emptyStretch = <span class="hljs-number">0</span>;
+
+                <span class="hljs-keyword">if</span> (!reachedMaxSpoutPending &amp;&amp; pendingEmitsIsEmpty) {
+                    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; spouts.size(); j++) {
+                        spouts.get(j).nextTuple();
+                    }
+                    noEmits = (currCount == emittedCount.get());
+                    <span class="hljs-keyword">if</span> (noEmits) {
+                        emptyEmitStreak.increment();
+                    } <span class="hljs-keyword">else</span> {
+                        emptyStretch = emptyEmitStreak.get();
+                        emptyEmitStreak.set(<span class="hljs-number">0</span>);
+                    }
+                }
+                <span class="hljs-keyword">if</span> (reachedMaxSpoutPending) {
+                    <span class="hljs-keyword">if</span> (rmspCount == <span class="hljs-number">0</span>) {
+                        LOG.debug(<span class="hljs-string">&quot;Reached max spout pending&quot;</span>);
+                    }
+                    rmspCount++;
+                } <span class="hljs-keyword">else</span> {
+                    <span class="hljs-keyword">if</span> (rmspCount &gt; <span class="hljs-number">0</span>) {
+                        LOG.debug(<span class="hljs-string">&quot;Ended max spout pending stretch of {} iterations&quot;</span>, rmspCount);
+                    }
+                    rmspCount = <span class="hljs-number">0</span>;
+                }
+
+                <span class="hljs-keyword">if</span> (receiveCount &gt; <span class="hljs-number">1</span>) {
+                    <span class="hljs-comment">// continue without idling</span>
+                    <span class="hljs-keyword">return</span> <span class="hljs-number">0L</span>;
+                }
+                <span class="hljs-keyword">if</span> (!pendingEmits.isEmpty()) { <span class="hljs-comment">// then facing backpressure</span>
+                    backPressureWaitStrategy();
+                    <span class="hljs-keyword">return</span> <span class="hljs-number">0L</span>;
+                }
+                bpIdleCount = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">if</span> (noEmits) {
+                    spoutWaitStrategy(reachedMaxSpoutPending, emptyStretch);  <span class="hljs-comment">// 如果没有emit, spout等待</span>
+                    <span class="hljs-keyword">return</span> <span class="hljs-number">0L</span>;
+                }
+                swIdleCount = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">return</span> <span class="hljs-number">0L</span>;
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">backPressureWaitStrategy</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException </span>{
+                <span class="hljs-keyword">long</span> start = Time.currentTimeMillis();
+                bpIdleCount = backPressureWaitStrategy.idle(bpIdleCount);
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">spoutWaitStrategy</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> reachedMaxSpoutPending, <span class="hljs-keyword">long</span> emptyStretch)</span> <span class="hljs-keyword">throws</span> InterruptedException </span>{
+                emptyEmitStreak.increment();
+                <span class="hljs-keyword">long</span> start = Time.currentTimeMillis();
+                swIdleCount = spoutWaitStrategy.idle(swIdleCount);
+            }
+</div></code></pre>
+<p>(3) bolt主循环</p>
+<pre><code class="language-java"><div> <span class="hljs-function"><span class="hljs-keyword">public</span> Callable&lt;Long&gt; <span class="hljs-title">call</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        init(idToTask, idToTaskBase);
+
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Callable&lt;Long&gt;() {
+            <span class="hljs-keyword">int</span> bpIdleCount = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">int</span> consumeIdleCounter = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ExitCondition tillNoPendingEmits = () -&gt; pendingEmits.isEmpty();
+
+            <span class="hljs-meta">@Override</span>
+            <span class="hljs-function"><span class="hljs-keyword">public</span> Long <span class="hljs-title">call</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
+                updateExecCredsIfRequired();
+                <span class="hljs-keyword">boolean</span> pendingEmitsIsEmpty = tryFlushPendingEmits();
+                <span class="hljs-keyword">if</span> (pendingEmitsIsEmpty) {
+                    <span class="hljs-keyword">if</span> (bpIdleCount != <span class="hljs-number">0</span>) {
+                        LOG.debug(<span class="hljs-string">&quot;Ending Back Pressure Wait stretch : {}&quot;</span>, bpIdleCount);
+                    }
+                    bpIdleCount = <span class="hljs-number">0</span>;
+                    <span class="hljs-keyword">int</span> consumeCount = receiveQueue.consume(BoltExecutor.<span class="hljs-keyword">this</span>, tillNoPendingEmits);
+                    <span class="hljs-keyword">if</span> (consumeCount == <span class="hljs-number">0</span>) {
+                        <span class="hljs-keyword">if</span> (consumeIdleCounter == <span class="hljs-number">0</span>) {
+                            LOG.debug(<span class="hljs-string">&quot;Invoking consume wait strategy&quot;</span>);
+                        }
+                        consumeIdleCounter = consumeWaitStrategy.idle(consumeIdleCounter);
+                        <span class="hljs-keyword">if</span> (Thread.interrupted()) {
+                            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InterruptedException();
+                        }
+                    } <span class="hljs-keyword">else</span> {
+                        <span class="hljs-keyword">if</span> (consumeIdleCounter != <span class="hljs-number">0</span>) {
+                            LOG.debug(<span class="hljs-string">&quot;Ending consume wait stretch : {}&quot;</span>, consumeIdleCounter);
+                        }
+                        consumeIdleCounter = <span class="hljs-number">0</span>;
+                    }
+                } <span class="hljs-keyword">else</span> {
+                    <span class="hljs-keyword">if</span> (bpIdleCount == <span class="hljs-number">0</span>) { <span class="hljs-comment">// check avoids multiple log msgs when spinning in a idle loop</span>
+                        LOG.debug(<span class="hljs-string">&quot;Experiencing Back Pressure. Entering BackPressure Wait. PendingEmits = {}&quot;</span>, pendingEmits.size());
+                    }
+                    bpIdleCount = backPressureWaitStrategy.idle(bpIdleCount);
+                }
+
+                <span class="hljs-keyword">return</span> <span class="hljs-number">0L</span>;
+            }
+</div></code></pre>
+<h3 id="332-fieldsgroup计算">3.3.2 FieldsGroup计算</h3>
+<pre><code class="language-java"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">deepHashCode</span><span class="hljs-params">(Object a[])</span> </span>{
+        <span class="hljs-keyword">if</span> (a == <span class="hljs-keyword">null</span>)
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+        <span class="hljs-keyword">int</span> result = <span class="hljs-number">1</span>;
+
+        <span class="hljs-keyword">for</span> (Object element : a) {
+            <span class="hljs-keyword">int</span> elementHash = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">if</span> (element <span class="hljs-keyword">instanceof</span> Object[])
+                elementHash = deepHashCode((Object[]) element);
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (element <span class="hljs-keyword">instanceof</span> <span class="hljs-keyword">byte</span>[])
+                elementHash = hashCode((<span class="hljs-keyword">byte</span>[]) element);
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (element <span class="hljs-keyword">instanceof</span> <span class="hljs-keyword">short</span>[])
+                elementHash = hashCode((<span class="hljs-keyword">short</span>[]) element);
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (element <span class="hljs-keyword">instanceof</span> <span class="hljs-keyword">int</span>[])
+                elementHash = hashCode((<span class="hljs-keyword">int</span>[]) element);
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (element <span class="hljs-keyword">instanceof</span> <span class="hljs-keyword">long</span>[])
+                elementHash = hashCode((<span class="hljs-keyword">long</span>[]) element);
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (element <span class="hljs-keyword">instanceof</span> <span class="hljs-keyword">char</span>[])
+                elementHash = hashCode((<span class="hljs-keyword">char</span>[]) element);
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (element <span class="hljs-keyword">instanceof</span> <span class="hljs-keyword">float</span>[])
+                elementHash = hashCode((<span class="hljs-keyword">float</span>[]) element);
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (element <span class="hljs-keyword">instanceof</span> <span class="hljs-keyword">double</span>[])
+                elementHash = hashCode((<span class="hljs-keyword">double</span>[]) element);
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (element <span class="hljs-keyword">instanceof</span> <span class="hljs-keyword">boolean</span>[])
+                elementHash = hashCode((<span class="hljs-keyword">boolean</span>[]) element);
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (element != <span class="hljs-keyword">null</span>)
+                elementHash = element.hashCode();
+
+            result = <span class="hljs-number">31</span> * result + elementHash;
+        }
+
+        <span class="hljs-keyword">return</span> result;
+    }
+</div></code></pre>
+<h3 id="333-ack机制">3.3.3 ack机制</h3>
+<pre><code class="language-java"><div><span class="hljs-keyword">package</span> org.apache.storm.daemon;
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">execute</span><span class="hljs-params">(Tuple input)</span> </span>{
+        <span class="hljs-keyword">if</span> (TupleUtils.isTick(input)) {
+            Map&lt;Object, AckObject&gt; tmp = pending.rotate();
+            LOG.debug(<span class="hljs-string">&quot;Number of timeout tuples:{}&quot;</span>, tmp.size());
+            <span class="hljs-keyword">return</span>;
+        }
+
+        <span class="hljs-keyword">boolean</span> resetTimeout = <span class="hljs-keyword">false</span>;
+        String streamId = input.getSourceStreamId();
+        Object id = input.getValue(<span class="hljs-number">0</span>);
+        AckObject curr = pending.get(id);
+        <span class="hljs-keyword">if</span> (ACKER_INIT_STREAM_ID.equals(streamId)) {
+            <span class="hljs-keyword">if</span> (curr == <span class="hljs-keyword">null</span>) {
+                curr = <span class="hljs-keyword">new</span> AckObject();
+                pending.put(id, curr);
+            }
+            curr.updateAck(input.getLong(<span class="hljs-number">1</span>));
+            curr.spoutTask = input.getInteger(<span class="hljs-number">2</span>);
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ACKER_ACK_STREAM_ID.equals(streamId)) {
+            <span class="hljs-keyword">if</span> (curr == <span class="hljs-keyword">null</span>) {
+                curr = <span class="hljs-keyword">new</span> AckObject();
+                pending.put(id, curr);
+            }
+            curr.updateAck(input.getLong(<span class="hljs-number">1</span>));
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ACKER_FAIL_STREAM_ID.equals(streamId)) {
+            <span class="hljs-comment">// For the case that ack_fail message arrives before ack_init</span>
+            <span class="hljs-keyword">if</span> (curr == <span class="hljs-keyword">null</span>) {
+                curr = <span class="hljs-keyword">new</span> AckObject();
+            }
+            curr.failed = <span class="hljs-keyword">true</span>;
+            pending.put(id, curr);
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ACKER_RESET_TIMEOUT_STREAM_ID.equals(streamId)) {
+            resetTimeout = <span class="hljs-keyword">true</span>;
+            <span class="hljs-keyword">if</span> (curr == <span class="hljs-keyword">null</span>) {
+                curr = <span class="hljs-keyword">new</span> AckObject();
+            }
+            pending.put(id, curr);
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (Constants.SYSTEM_FLUSH_STREAM_ID.equals(streamId)) {
+            collector.flush();
+            <span class="hljs-keyword">return</span>;
+        } <span class="hljs-keyword">else</span> {
+            LOG.warn(<span class="hljs-string">&quot;Unknown source stream {} from task-{}&quot;</span>, streamId, input.getSourceTask());
+            <span class="hljs-keyword">return</span>;
+        }
+
+        <span class="hljs-keyword">int</span> task = curr.spoutTask;
+        <span class="hljs-keyword">if</span> (task &gt;= <span class="hljs-number">0</span> &amp;&amp; (curr.val == <span class="hljs-number">0</span> || curr.failed || resetTimeout)) {
+            Values tuple = <span class="hljs-keyword">new</span> Values(id, getTimeDeltaMillis(curr.startTime));
+            <span class="hljs-keyword">if</span> (curr.val == <span class="hljs-number">0</span>) {
+                pending.remove(id);
+                collector.emitDirect(task, ACKER_ACK_STREAM_ID, tuple);
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (curr.failed) {
+                pending.remove(id);
+                collector.emitDirect(task, ACKER_FAIL_STREAM_ID, tuple);
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (resetTimeout) {
+                collector.emitDirect(task, ACKER_RESET_TIMEOUT_STREAM_ID, tuple);
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException(<span class="hljs-string">&quot;The checks are inconsistent we reach what should be unreachable code.&quot;</span>);
+            }
+        }
+
+        collector.ack(input);
+    }
+
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AckObject</span> </span>{
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">long</span> val = <span class="hljs-number">0L</span>;
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">long</span> startTime = Time.currentTimeMillis();
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> spoutTask = -<span class="hljs-number">1</span>;
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> failed = <span class="hljs-keyword">false</span>;
+
+        <span class="hljs-comment">// val xor value</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">updateAck</span><span class="hljs-params">(Long value)</span> </span>{
+            val = Utils.bitXor(val, value);
+        }
+    }
+</div></code></pre>
+
+    </body>
+    </html>
